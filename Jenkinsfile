@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages{
-    stage('Step 1'){
-      steps {
-        echo 'Hello World!'  
+    stage('Checkout From Master Branch'){
+      steps { 
+        git branch: 'master', url: 'https://github.com/praveen-host/docker-test.git'
       }      
     }
   }
