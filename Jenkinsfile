@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
-        sh "docker build -f .github/workflows/Dockerfile -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+        sh "docker build -f .github/workflows/docker-image.yml -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
       }
     }
 
