@@ -8,7 +8,7 @@ pipeline {
   stages{
     stage('Checkout From Master Branch'){
       steps { 
-        git branch: 'master', url: 'https://github.com/praveen-host/docker-test.git'
+        git branch: 'master', url: 'https://github.com/praveen-host/WebAPI001.git'
       }      
     }
     stage('Docker Build') {
