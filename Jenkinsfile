@@ -16,6 +16,11 @@ pipeline {
         sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
       }
     }
+    stage('Login to dockerhub'){
+      steps{
+        sh "docker login --username yadavpk --password yadavhub@#1234"
+      }
+    }
 
   }
 }
