@@ -3,6 +3,7 @@ pipeline {
   environment {
     DOCKER_IMAGE = "yadavpk/minimalwebapi"
     DOCKER_TAG = "latest"
+    DOCKER_CREDENTIALS=credentials('dockerhub-creds')
   }
 
   stages{
@@ -18,7 +19,7 @@ pipeline {
     }
     stage('Login to dockerhub'){
       steps{
-        sh "docker login --username yadavpk --password yadavhub@#1234"
+        sh "docker login --username ${DOCKER_CREDENTIALS_USD} --password ${DOCKER_CREDENTIALS_PSW}"
       }
     }
 
