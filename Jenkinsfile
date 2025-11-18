@@ -36,17 +36,10 @@ pipeline {
         sh 'az login --identity' // or use Service Principal
       }
     }
-    stage('Azure Login') {
-      steps {
-        sh 'az login --identity' // or use Service Principal
-      }
-    }
-
-    stage('Login to Azure'){
+    stage('Get AKS Credentials'){
       steps{
         sh "az aks get-credentials --resource-group CICD_RGroup --name Jenkins-AKS --overwrite-existing"
       } 
     }
-
   }
 }
