@@ -31,9 +31,20 @@ pipeline {
         sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"      
       }      
     }
+    stage('Azure Login') {
+      steps {
+        sh 'az login --identity' // or use Service Principal
+      }
+    }
+    stage('Azure Login') {
+      steps {
+        sh 'az login --identity' // or use Service Principal
+      }
+    }
+
     stage('Login to Azure'){
       steps{
-        sh "kubectl get pods"
+        sh "az aks get-credentials --resource-group CICD_RGroup --name Jenkins-AKS --overwrite-existing"
       } 
     }
 
