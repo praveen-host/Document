@@ -41,5 +41,10 @@ pipeline {
         sh "az aks get-credentials --resource-group CICD_RGroup --name Jenkins-AKS --overwrite-existing"
       } 
     }
+    stage('Get AKS Pods'){
+      steps{
+        sh 'kubectl get pods'
+      }
+    }
   }
 }
