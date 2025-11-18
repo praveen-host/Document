@@ -41,6 +41,11 @@ pipeline {
         sh "az aks get-credentials --resource-group CICD_RGroup --name Jenkins-AKS --overwrite-existing"
       } 
     }
+    stage('HelloWorld'){
+      steps{
+        sh 'kubectl run helloworld --image=yadavpk/helloworld --port=8080'
+      }
+    }
     stage('Get AKS Pods'){
       steps{
         sh 'kubectl get pods'
