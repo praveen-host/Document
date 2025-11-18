@@ -43,7 +43,7 @@ pipeline {
     }
     stage('HelloWorld'){
       steps{
-        sh 'kubectl run helloworld --image=yadavpk/helloworld --port=8080'
+        sh 'kubectl run helloworld --image=yadavpk/helloworld:1.0.1 --port=8080'
       }
     }
     stage('Get AKS Pods'){
