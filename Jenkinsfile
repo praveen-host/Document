@@ -31,7 +31,7 @@ pipeline {
         sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"      
       }      
     }
-    stage('Login to Azure){
+    stage('Login to Azure'){
       steps{
         sh "kubectl get pods"
       } 
