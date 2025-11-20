@@ -31,7 +31,7 @@ pipeline {
           // Convert TRX to JUnit XML for Jenkins reporting
           sh 'dotnet tool install --global trx2junit || true'
           sh '~/.dotnet/tools/trx2junit UnitTestwebAPI002/TestResults/test_results.trx'
-          junit 'tests/TestResults/*.xml'
+          junit 'UnitTestwebAPI002/TestResults/*.xml'
         }
       }
     }    
