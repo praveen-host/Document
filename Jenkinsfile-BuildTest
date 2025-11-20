@@ -22,6 +22,11 @@ pipeline {
        sh 'dotnet build  WebAPI002/WebAPI002.csproj --configuration release'
       }
     }
+    stage('Unit Test'){
+      steps{
+        sh 'dotnet test UnitTestwebAPI002/UnitTestwebAPI002.csproj --logger "trx;LogFileName=test_results.trx"'
+      }
+    }
     
   }
     
