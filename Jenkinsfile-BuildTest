@@ -26,8 +26,15 @@ pipeline {
       steps{
         sh 'dotnet test UnitTestwebAPI002/UnitTestwebAPI002.csproj --logger "trx;LogFileName=test_results.trx"'
       }
-    }
-    
+      post {
+        always {
+          // Convert TRX to JUnit XML for Jenkins reporting
+          sh 'dotnet tool install --global trx2junit || true'
+          sh '~/.dotnet/tools/trx2junit tests/TestResults/test_results.trx'
+          junit 'tests/TestResults/*.xml'
+        }
+      }
+    }    
   }
     
 }
