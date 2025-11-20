@@ -13,7 +13,7 @@ pipeline {
       }      
     }
   }
-  stage('Restore') {
+  stages('Restore') {
     steps {
       sh 'dotnet restore WebAPI002/WebAPI002.csproj'
     }
