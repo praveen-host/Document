@@ -6,16 +6,18 @@ pipeline {
     DOCKER_CREDENTIALS=credentials('dockerhub-creds')
   }
 
-  
-    stages('Checkout From Master Branch'){
+  stages{
+stage('Checkout From Master Branch'){
       steps { 
         git branch: 'master', url: 'https://github.com/praveen-host/JenkinCID.git'
       }      
     }
   
-  stages('Restore') {
+  stage('Restore') {
     steps {
       sh 'dotnet restore WebAPI002/WebAPI002.csproj'
     }
   }
+  }
+    
 }
