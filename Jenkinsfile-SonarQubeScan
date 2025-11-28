@@ -1,45 +1,46 @@
-pipeline {
-  agent any
-  environment {
-    DOCKER_IMAGE = "yadavpk/minimalwebapi"
-    DOCKER_TAG = "latest"
-    DOCKER_CREDENTIALS=credentials('dockerhub-creds')
-  }
 
-  stages{
-    stage('Checkout From Master Branch'){
-      steps { 
-        git branch: 'master', url: 'https://github.com/praveen-host/JenkinCID.git'
-      }      
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = "yadavpk/minimalwebapi"
+        DOCKER_TAG = "latest"
+        DOCKER_CREDENTIALS = credentials('dockerhub-creds')
     }
-    stage('Restore') {
-      steps {
-        sh 'dotnet restore WebAPI002/WebAPI002.csproj'
-      }
-    }
-    stage('Build') {
-      steps {
-       sh 'dotnet build  WebAPI002/WebAPI002.csproj --configuration release'
-      }
-    }
-    stage('Code Analysis') {
-      environment {
-        scannerHome = tool 'SonarScanner'
-      }
-      steps {
-        script {
-          def scannerHome = tool 'SonarScanner'
-          withSonarQubeEnv('SonarScanner') {
-            sh """
-            ${scannerHome}/bin/sonar-scanner \
-            -Dsonar.projectKey=Project001 \
-            -Dsonar.projectName=Project001 \
-            -Dsonar.projectVersion=1.0 \
-            -Dsonar.sources=src
-            """
-          }
+
+    stages {
+        stage('Checkout From Master Branch') {
+            steps {
+                git branch: 'master', url: 'https://github.com/praveen-host/JenkinCID.git'
+            }
         }
-      }
-    }       
-  }    
+
+        stage('Restore') {
+            steps {
+                sh 'dotnet restore WebAPI002/WebAPI002.csproj'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'dotnet build WebAPI002/WebAPI002.csproj --configuration release'
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarScanner' // Jenkins tool name
+                    withSonarQubeEnv('SonarQube') { // Jenkins SonarQube server name
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=Project001 \
+                        -Dsonar.projectName=Project001 \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=WebAPI002
+                        """
+                    }
+                }
+            }
+        }
+    }
 }
