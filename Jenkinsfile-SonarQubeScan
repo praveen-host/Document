@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarScanner' // Jenkins tool name
-                    withSonarQubeEnv('SonarQube') { // Jenkins SonarQube server name
+                    withSonarQubeEnv('SQ_MSBUILD') { // Jenkins SonarQube server name
                         sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=Project001 \
