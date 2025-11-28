@@ -29,12 +29,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarScanner'
-                    withSonarQubeEnv('SonarQube') {
+                    def scannerHome = tool 'SonarScanner' // Must match Global Tool 
+                    withSonarQubeEnv('SonarQube') { // Must match SonarQube Server name
                         sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=Project001 \
-                        -Dsonar.projectName=Project001 \
+                        -Dsonar.projectName=DemoProject \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=WebAPI002 \
                         -Dsonar.host.url=${env.SONAR_HOST_URL} \
