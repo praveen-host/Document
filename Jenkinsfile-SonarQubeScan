@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout From Master Branch') {
+        stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/praveen-host/JenkinCID.git'
             }
@@ -22,23 +22,33 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'dotnet build WebAPI002/WebAPI002.csproj --configuration release'
+                sh 'dotnet build WebAPI002/WebAPI002.csproj --configuration Release'
             }
         }
 
-        stage('Code Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarScanner' // Jenkins tool name
-                    withSonarQubeEnv('SQ_MSBUILD') { // Jenkins SonarQube server name
+                    def scannerHome = tool 'SonarScanner'
+                    withSonarQubeEnv('SonarQube') {
                         sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=Project001 \
                         -Dsonar.projectName=Project001 \
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=WebAPI002
+                        -Dsonar.sources=WebAPI002 \
+                        -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                        -Dsonar.login=${env.SONAR_AUTH_TOKEN}
                         """
                     }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
