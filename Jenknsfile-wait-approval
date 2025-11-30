@@ -1,0 +1,14 @@
+pipelines{
+  stages{
+    stage{
+      step('Wait for Approval'){
+        input 'Need Approval'
+      }
+    }
+    stage{
+      step('Trigger Job 2'){
+        build job: 'Job 2'
+      }
+    }
+  }
+}
