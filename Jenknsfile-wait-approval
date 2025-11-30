@@ -1,12 +1,12 @@
 pipeline {
-  stages{
-    stage{
-      step('Wait for Approval'){
+  stages {
+    stage('Wait for Approval') {
+      step {
         input 'Need Approval'
       }
     }
-    stage{
-      step('Trigger Job 2'){
+    stage('Trigger Job 2'){
+      step {
         build job: 'Job 2'
       }
     }
