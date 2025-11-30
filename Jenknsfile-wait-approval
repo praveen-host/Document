@@ -1,4 +1,4 @@
-pipelines{
+pipeline {
   stages{
     stage{
       step('Wait for Approval'){
