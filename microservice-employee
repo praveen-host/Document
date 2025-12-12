@@ -1,0 +1,26 @@
+pipeline {
+  agent any
+  environment {
+    DOCKER_IMAGE = "yadavpk/microservice-employee"
+    DOCKER_TAG = "latest"
+    DOCKER_CREDENTIALS=credentials('dockerhub-creds')
+  }
+
+  stages{
+    stage('Checkout From Master Branch'){
+      steps { 
+        git branch: 'main', url: 'https://github.com/praveen-host/microservice-employee.git'
+      }      
+    }
+    stage('Restore') {
+      steps {
+        sh 'dotnet restore microservice-employee.csproj'
+      }
+    }
+    stage('Build') {
+      steps {
+       sh 'dotnet build  microservice-employee.csproj --configuration release'
+      }
+    }   
+  }    
+}
